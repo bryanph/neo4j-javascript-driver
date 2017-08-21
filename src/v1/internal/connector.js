@@ -166,7 +166,7 @@ class Connection {
    *                  callback property
    * @param url - url to connect to
    */
-  constructor (channel, url) {
+  constructor (channel, url, config) {
     /**
      * An ordered queue of observers, each exchange response (zero or more
      * RECORD messages followed by a SUCCESS message) we recieve will be routed
@@ -181,7 +181,7 @@ class Connection {
     this._dechunker = new Dechunker();
     this._chunker = new Chunker( channel );
     this._packer = new Packer( this._chunker );
-    this._unpacker = new Unpacker();
+    this._unpacker = new Unpacker(config);
 
     this._isHandlingFailure = false;
     this._currentFailure = null;
@@ -591,7 +591,7 @@ function connect(url, config = {}, connectionErrorCode = null) {
   const completeUrl = host + ':' + port;
   const channelConfig = new ChannelConfig(host, port, config, connectionErrorCode);
 
-  return new Connection( new Ch(channelConfig), completeUrl);
+  return new Connection( new Ch(channelConfig), completeUrl, config);
 }
 
 export {

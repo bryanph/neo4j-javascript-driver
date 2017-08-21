@@ -309,11 +309,13 @@ class Packer {
   * @access private
   */
 class Unpacker {
-  constructor () {
+  constructor (config) {
     // Higher level layers can specify how to map structs to higher-level objects.
     // If we recieve a struct that has a signature that does not have a mapper,
     // we simply return a Structure object.
     this.structMappers = {};
+
+    this._convertToString = config && config.convertToString
   }
 
   unpack(buffer) {
@@ -332,7 +334,7 @@ class Unpacker {
 
     const number = this._unpackNumber(marker, buffer);
     if (number !== null) {
-      return number;
+      return !this._convertToString ?  number : number.toString();
     }
 
     const string = this._unpackString(marker, markerHigh, markerLow, buffer);
