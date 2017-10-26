@@ -1,5 +1,5 @@
 {
-  "name": "neo4j-driver",
+  "name": "@bryanph/neo4j-driver",
   "version": "1.2.0-dev",
   "description": "Connect to Neo4j 3.1.0 and up from JavaScript",
   "author": "Neo Technology Inc.",
